@@ -1,0 +1,65 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+ 					 		 
+ <welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
+ 
+ 
+ 
+ <display-name>PubHub</display-name>
+ <servlet>
+  <servlet-name>LoginServlet</servlet-name>
+  <servlet-class>examples.pubhub.servlets.LoginServlet</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>PublishBookServlet</servlet-name>
+  <servlet-class>examples.pubhub.servlets.PublishBookServlet</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+  <servlet-name>LoginServlet</servlet-name>
+  <url-pattern>/FormAuthServlet</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet-mapping>
+  <servlet-name>PublishBookServlet</servlet-name>
+  <url-pattern>/admin/PublishBook</url-pattern>
+ </servlet-mapping>
+ 
+   
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Admn Console</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		
+		<auth-constraint>
+			<role-name>superuser</role-name>
+			<role-name>standarduser</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/invalidLogin.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+	
+<error-page>
+  <error-code>404</error-code>
+  <location>/admin/notFoundError.jsp</location>
+ </error-page>
+ <error-page>
+  <exception-type>java.lang.Throwable</exception-type>
+  <location>/admin/error.jsp</location>
+ </error-page>		
+ 
+</web-app>
